@@ -94,25 +94,45 @@ The puzzle presented is the following:
 \begin{align}
 &\min \quad &&0 \\
 & \text{s.t.} \quad 
-  && x_i 			&&\geq 1, 		&&\quad \forall i \in \onetonine \label{eq:basicmin1} \\
-& && x_i 			&&\leq 9,  		&&\quad \forall i \in \onetonine \label{eq:basicmax9} \\
-& && x_i - x_j 	&&\leq -\epsilon + y_{i,j} M, && \quad \forall i,j \in \onetonine \label{eq:basicm1}\\
-& && x_i - x_j 	&&\geq \epsilon - (1-y_{i,j}) M, && \quad \forall i,j \in \onetonine \label{eq:basicm2}\\
+  && x_i 			&&\geq 1 		,&&\quad \forall i \in \onetonine \label{eq:basicmin1} \\
+& && x_i 			&&\leq 9  		,&&\quad \forall i \in \onetonine \label{eq:basicmax9} \\
+& && x_i - x_j 	&&\leq -\epsilon + y_{i,j} M ,&& \quad \forall i,j \in \onetonine \label{eq:basicm1}\\
+& && x_i - x_j 	&&\geq \epsilon - (1-y_{i,j}) M ,&& \quad \forall i,j \in \onetonine \label{eq:basicm2}\\
 & && (x_0 - x_1) x_2  &&= 3 \label{eq:problemh1} \\
 & && (x_3 + x_4) x_5  &&= 20 \label{eq:problemh2} \\
 & && x_6  + x_7 + x_8 &&= 20 \label{eq:problemh3} \\
 & && x_0 - x_3 + x_6  &&= 13 \label{eq:problemv1} \\
-& && \frac{(x_1 + x_4)}{x_7} &&= 1 \label{eq:problemv2} \\
+& && \frac{(x_1 + x_4)}{x_7} ,&&= 1 \label{eq:problemv2} \\
 & && x_2  x_5  x_8 &&= 20 \label{eq:problemv3} \\
-& && x_i 		&&\in \mathbb{N}, i && \quad \forall i \in \onetonine \\
-& && y_{i,j} 		&&\in {0,1}, i && \quad \forall i,j \in \onetonine \\
+& && x_i 		&&\in \mathbb{N}  ,&& \quad \forall i \in \onetonine \\
+& && y_{i,j} 		&&\in \{0,1\} ,&& \quad \forall i,j \in \onetonine \\
 \end{align}
 $M$ is very big and $\epsilon$ is a very small number.
 
-\autoref{eq:basicmin1} to \autoref{eq:basicm2} are the basic requirements for the corss-math puzzle. \autoref{eq:problemh1} to \autoref{eq:problemv3} are the specific equations for this problem.
+\autoref{eq:basicmin1} -- \autoref{eq:basicm2} are the basic requirements for the corss-math puzzle. \autoref{eq:problemh1} -- \autoref{eq:problemv3} are the specific equations for this problem.
 
-%\subsection{Binary variables}
-%todo
+\subsection{One Hot Matrix}
+
+The idea behind a one hot matrix is to add a binary variable for each possibility. In our case this means to add 9 binary variables for every field.
+
+
+\begin{align}
+&\min \quad &&0 \\
+& \text{s.t.} \quad 
+&& \sum_{j=1}^{j\leq 9}x_{i,j}   &&= 1 		,&&\quad \forall i \in \onetonine \label{eq:basics1} \\
+& && \sum_{i=1}^{i\leq 9}x_{i,j} 			&&=1  		,&&\quad \forall j \in \onetonine \label{eq:basics2} \\
+& && y_i &&= \sum_{j=1}^{j\leq 9} jx_{i,j}  ,&&\quad \forall i \in \onetonine \label{eq:vali} \\
+& && (y_0 - y_1) y_2  &&= 3 \label{eq:2problemh1} \\
+& && (y_3 + y_4) y_5  &&= 20 \label{eq:2problemh2} \\
+& && y_6  + y_7 + y_8 &&= 20 \label{eq:2problemh3} \\
+& && y_0 - y_3 + y_6  &&= 13 \label{eq:2problemv1} \\
+& && \frac{(y_1 + y_4)}{y_7} &&= 1 \label{eq:2problemv2} \\
+& && y_2  y_5  y_8 &&= 20 \label{eq:2problemv3} \\
+& && x_{i,j} 		&&\in \{0,1\} ,&& \quad \forall i,j \in \onetonine \\
+\end{align}
+
+The constraints \autoref{eq:basics1} and \autoref{eq:basics2} define the uniqueness of a number in the problem. With \autoref{eq:vali} a linear expression $y_i$ is defined that expresses the actual value of the cell $i$. This linear expression is then used in \autoref{eq:2problemh1} -- \autoref{eq:2problemv3} to define the actual problem. These constraints are the same as \autoref{eq:problemh1} -- \autoref{eq:problemv3}.
+
 \section{Solution}
 \begin{center}
 	\begin{tikzpicture}
