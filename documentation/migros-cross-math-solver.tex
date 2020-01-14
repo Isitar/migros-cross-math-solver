@@ -5,6 +5,7 @@
 \usepackage{amsmath, amsfonts}
 \usepackage{tikz}
 \usepackage{hyperref}
+\usepackage{listings}
 
 \title{Migros Cross-Math Solver}
 \author{Pascal Lüscher}
@@ -88,7 +89,8 @@ The puzzle presented is the following:
 \end{center}
 
 
-\section{Mathematical formulation}
+\section{QCP Mathematical formulation}
+In this section i present some quadratic constraint programming solutions
 \subsection{With Big-$M$}
 
 \begin{align}
@@ -132,6 +134,26 @@ The idea behind a one hot matrix is to add a binary variable for each possibilit
 \end{align}
 
 The constraints \autoref{eq:basics1} and \autoref{eq:basics2} define the uniqueness of a number in the problem. With \autoref{eq:vali} a linear expression $y_i$ is defined that expresses the actual value of the cell $i$. This linear expression is then used in \autoref{eq:2problemh1} -- \autoref{eq:2problemv3} to define the actual problem. These constraints are the same as \autoref{eq:problemh1} -- \autoref{eq:problemv3}.
+
+\clearpage
+\section{Backtracking}
+The puzzle is small and can easily be solved using a naive backtracking algorithm.
+A pseudo code algorithm is shown here:
+\begin{lstlisting}
+int[] field = new int[9];
+Func<int,int,int,bool> predicates;
+Solve(int currentField, int[] availableNumbers) 
+  if (!checkAllPredicates) return false;
+  if (currentField > 8) return true
+	
+  foreach(number in availableNumbers) do
+    field[currentField] = number
+      if (Solve(currentField + 1, availableNumbers without number)) 
+        return true	
+  field[currentField] = 0
+  return false
+
+\end{lstlisting}
 
 \section{Solution}
 \begin{center}
