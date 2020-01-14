@@ -138,8 +138,8 @@ The constraints \autoref{eq:basics1} and \autoref{eq:basics2} define the uniquen
 \clearpage
 \section{Backtracking}
 The puzzle is small and can easily be solved using a naive backtracking algorithm.
-A pseudo code algorithm is shown here:
-\begin{lstlisting}
+A pseudo code algorithm is shown in \autoref{lst:backtracking}. The function \lstinline|checkAllPredicates| checks if all conditions are met.
+\begin{lstlisting}[label=lst:backtracking]
 int[] field = new int[9];
 Func<int,int,int,bool> predicates;
 Solve(int currentField, int[] availableNumbers) 
@@ -152,7 +152,6 @@ Solve(int currentField, int[] availableNumbers)
         return true	
   field[currentField] = 0
   return false
-
 \end{lstlisting}
 
 \section{Solution}
